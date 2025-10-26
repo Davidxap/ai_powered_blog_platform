@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+
+{% block page_content %}
+<h2>Delete Comment</h2>
+
+<p>Are you sure you want to delete this comment?</p>
+
+<div class="comment-preview">
+    <p><strong>On post:</strong> <a href="{% url 'blog_detail' comment.post.pk %}">{{ comment.post.title }}</a></p>
+    <p>{{ comment.body }}</p>
+    <p><small>Posted: {{ comment.created_on|date:"M d, Y" }}</small></p>
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn--primary" style="background: var(--color-error);">
+        Yes, Delete
+    </button>
+    <a href="{% url 'blog_detail' comment.post.pk %}">Cancel</a>
+</form>
+
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load markdown_extras %}
+{% block page_content %}
+<h2>{{ post.title }}</h2>
+<p>By {{ post.author.username }} | {{ post.created_on|date:"M d, Y" }}</p>
+<p>
+    Categories:
+    {% for category in post.categories.all %}
+    <a href="{% url 'blog_category' category.name %}">{{ category.name }}</a>{% if not forloop.last %}, {% endif %}
+    {% empty %}
+    No categories
+    {% endfor %}
+</p>
+
+<!-- Show edit/delete buttons ONLY to post author -->
+{% if user == post.author %}
+<div class="post-actions">
+    <a href="{% url 'edit_post' post.pk %}">✏️ Edit Post</a> |
+    <a href="{% url 'delete_post' post.pk %}" onclick="return confirm('Delete this post?')">🗑️ Delete Post</a>
+</div>
+{% endif %}
+
+<hr>
+
+<!-- Post content with Markdown rendering -->
+<div class="post-content">
+    {{ post.body|markdown }}
+</div>
+
+<hr>
+
+<!-- Comments section -->
+<h4>Comments ({{ comments.count }})</h4>
+
+{% for comment in comments %}
+<div class="comment">
+    <p><strong>{{ comment.author.username }}</strong> <small>({{ comment.created_on|date:"M d, Y" }})</small>:</p>
+    <p>{{ comment.body }}</p>
+    
+    <!-- Show edit/delete buttons only to comment author -->
+    {% if user == comment.author %}
+    <div class="comment-actions">
+        <a href="{% url 'edit_comment' comment.pk %}">✏️ Edit</a> |
+        <a href="{% url 'delete_comment' comment.pk %}" onclick="return confirm('Delete this comment?')">🗑️ Delete</a>
+    </div>
+    {% endif %}
+</div>
+{% empty %}
+<p>No comments yet. Be the first to comment!</p>
+{% endfor %}
+
+<hr>
+
+<!-- Comment form (only for authenticated users) -->
+{% if user.is_authenticated %}
+<h4>Leave a Comment</h4>
+<form method="post">
+    {% csrf_token %}
+    {{ form.body }}
+    <button type="submit">Send Comment</button>
+</form>
+{% else %}
+<p>You must <a href="{% url 'login' %}">log in</a> to comment.</p>
+{% endif %}
+{% endblock page_content %}

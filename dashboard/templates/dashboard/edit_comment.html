@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+
+{% block page_content %}
+<h2>Edit Comment</h2>
+
+<p><strong>On post:</strong> <a href="{% url 'blog_detail' comment.post.pk %}">{{ comment.post.title }}</a></p>
+
+<form method="post">
+    {% csrf_token %}
+    
+    <div class="form-group">
+        <label for="body">Comment:</label>
+        <textarea name="body" id="body" rows="5" class="form-control" required>{{ comment.body }}</textarea>
+    </div>
+    
+    <button type="submit" class="btn btn--primary">Update Comment</button>
+    <a href="{% url 'blog_detail' comment.post.pk %}">Cancel</a>
+</form>
+
+{% endblock %}

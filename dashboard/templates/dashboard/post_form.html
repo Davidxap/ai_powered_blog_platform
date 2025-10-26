@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+{% if is_edit %}Edit Post{% else %}Create New Post{% endif %}
+{% endblock %}
+
+{% block page_content %}
+<h2>{% if is_edit %}Edit Post{% else %}Create New Post{% endif %}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    
+    <div>
+        <label for="{{ form.title.id_for_label }}">Title:</label>
+        {{ form.title }}
+        {% if form.title.errors %}
+        <p style="color: red;">{{ form.title.errors }}</p>
+        {% endif %}
+    </div>
+    
+    <div>
+        <label for="{{ form.body.id_for_label }}">Body:</label>
+        {{ form.body }}
+        {% if form.body.errors %}
+        <p style="color: red;">{{ form.body.errors }}</p>
+        {% endif %}
+    </div>
+    
+    <div>
+        <label>Categories (select at least one):</label>
+        {{ form.categories }}
+        {% if form.categories.errors %}
+        <p style="color: red;">{{ form.categories.errors }}</p>
+        {% endif %}
+    </div>
+    
+    <button type="submit">
+        {% if is_edit %}Update Post{% else %}Create{% endif %}
+    </button>
+    <a href="{% url 'dashboard' %}">Cancel</a>
+</form>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block page_title %}{% endblock %}
+
+{% block page_content %}
+<h2>Login</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <label>Username:</label><br>
+    <input type="text" name="username" required><br><br>
+
+    <label>Password:</label><br>
+    <input type="password" name="password" required><br><br>
+
+    <button type="submit">Login</button>
+</form>
+
+<p>Don't have an account? <a href="{% url 'register' %}">Create one</a></p>
+
+{% for message in messages %}
+<p style="color:red;">{{ message }}</p>
+{% endfor %}
+
+{% endblock %}

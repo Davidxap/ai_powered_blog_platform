@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block page_title %}Register{% endblock %}
+
+{% block page_content %}
+<h2>Create your account</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <label>Username:</label><br>
+    <input type="text" name="username" required><br><br>
+
+    <label>Email:</label><br>
+    <input type="email" name="email" required><br><br>
+
+    <label>Password:</label><br>
+    <input type="password" name="password" required><br><br>
+
+    <label>Confirm password:</label><br>
+    <input type="password" name="confirm" required><br><br>
+
+    <button type="submit">Register</button>
+</form>
+
+<p>Already have an account? <a href="{% url 'login' %}">Log in here</a></p>
+
+{% for message in messages %}
+<p style="color:red;">{{ message }}</p>
+{% endfor %}
+
+{% endblock %}

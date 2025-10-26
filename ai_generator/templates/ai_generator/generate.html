@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block page_title %}{% endblock %}
+
+{% block page_content %}
+<h2>🤖 Generate AI Article</h2>
+<p>Fill in the parameters below to generate a blog post using AI.</p>
+
+<form method="post">
+    {% csrf_token %}
+    
+    <div class="form-group">
+        <label for="{{ form.keyword.id_for_label }}">Keyword/Topic:</label>
+        {{ form.keyword }}
+        {% if form.keyword.help_text %}
+        <small>{{ form.keyword.help_text }}</small>
+        {% endif %}
+    </div>
+    
+    <div class="form-group">
+        <label for="{{ form.language.id_for_label }}">Language:</label>
+        {{ form.language }}
+    </div>
+    
+    <div class="form-group">
+        <label for="{{ form.tone.id_for_label }}">Tone:</label>
+        {{ form.tone }}
+        {% if form.tone.help_text %}
+        <small>{{ form.tone.help_text }}</small>
+        {% endif %}
+    </div>
+    
+    <div class="form-group">
+        <label for="{{ form.target_audience.id_for_label }}">Target Audience:</label>
+        {{ form.target_audience }}
+        {% if form.target_audience.help_text %}
+        <small>{{ form.target_audience.help_text }}</small>
+        {% endif %}
+    </div>
+    
+    <div class="form-group">
+        <label for="{{ form.min_words.id_for_label }}">Minimum Words:</label>
+        {{ form.min_words }}
+    </div>
+    
+    <div class="form-group">
+        <label for="{{ form.max_words.id_for_label }}">Maximum Words:</label>
+        {{ form.max_words }}
+    </div>
+    
+    <div class="form-group">
+        <label>Categories:</label>
+        {{ form.categories }}
+        {% if form.categories.help_text %}
+        <small>{{ form.categories.help_text }}</small>
+        {% endif %}
+    </div>
+    
+    <button type="submit">Generate Article</button>
+    <a href="{% url 'dashboard' %}">Cancel</a>
+</form>
+
+{% if messages %}
+<hr>
+<div class="messages">
+    {% for message in messages %}
+    <p class="{{ message.tags }}">{{ message }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% endblock %}
