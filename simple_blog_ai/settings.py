@@ -2,6 +2,7 @@
 from pathlib import Path
 from decouple import config, Csv
 
+
 # Base paths
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -9,11 +10,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", default=False, cast=bool)
 
-ALLOWED_HOSTS = [
-    "simpleblogdjangodocker-production.up.railway.app",
-    "localhost",
-    "127.0.0.1",
-]
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="localhost,127.0.0.1", cast=Csv())
+
 
 # CSRF and proxy/HTTPS
 # Django 4.x+: CSRF_TRUSTED_ORIGINS must include scheme (http/https) and port in dev.
@@ -78,17 +76,17 @@ TEMPLATES = [
 ]
 
 # Database (PostgreSQL)
-from decouple import config
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": config("DB_NAME"),
         "USER": config("DB_USER"),
         "PASSWORD": config("DB_PASSWORD"),
-        "HOST": config("DB_HOST"),
-        "PORT": config("DB_PORT"),
+        "HOST": config("DB_HOST", default="localhost"),
+        "PORT": config("DB_PORT", default="5432"),
     }
 }
+
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [

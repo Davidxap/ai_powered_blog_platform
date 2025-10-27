@@ -7,6 +7,7 @@ charset-normalizer==3.4.4
 colorama==0.4.6
 distro==1.9.0
 Django==5.2.7
+gunicorn==23.0.0
 h11==0.16.0
 httpcore==1.0.9
 httpx==0.28.1
@@ -14,6 +15,7 @@ idna==3.11
 jiter==0.11.1
 Markdown==3.9
 openai==2.6.1
+packaging==25.0
 psycopg2-binary==2.9.11
 pydantic==2.12.3
 pydantic_core==2.41.4
@@ -28,4 +30,3 @@ typing_extensions==4.15.0
 tzdata==2025.2
 urllib3==2.5.0
 whitenoise==6.11.0
-gunicorn==23.0.0
